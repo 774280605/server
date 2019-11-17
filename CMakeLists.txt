@@ -1,6 +1,14 @@
 cmake_minimum_required(VERSION 3.15)
 project(server)
 
+option(SYSTEM_APPLE "this system is apple" OFF)
+option(SYSTEM_WIN32 "this system is win32" OFF)
+
+
+
+
+
+
 set(CMAKE_CXX_STANDARD 17)
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/bin)
 
