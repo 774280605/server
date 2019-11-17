@@ -27,14 +27,16 @@ public:
 
 private:
     int open();
+    void remove(int socket);
+    void reference();
 
-
+    void release();
 
     int kq_{0};
 
     std::unordered_map<int,EventHandler*> sockLists_;
     struct kevent ev_[2]{0};
-
+    int count_{};
 };
 
 

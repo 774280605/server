@@ -3,8 +3,12 @@
 //
 
 #include "Session.h"
-
+#include <sys/socket.h>
 int Session::handleReadEvent(int fd) {
+    char buffer[1024] = {0};
+    auto bytes = recv(fd, buffer, 1024, 0);
+
+    printf(buffer);
     return 0;
 }
 

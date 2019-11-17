@@ -6,7 +6,7 @@
 
 
 KReactor::KReactor() {
-
+    open();
 }
 
 KReactor::~KReactor() {
@@ -26,6 +26,11 @@ int KReactor::registerEventHandler(int socket, EVENT_TYPE type, EventHandler*han
         opt|=EVFILT_WRITE;
 
     EV_SET(&ev_[0],socket,opt,EV_ADD|EV_ENABLE,0,0,0);
+    kevent(kq_,&ev_[0],1, nullptr,0, nullptr);
+    sockLists_[socket]=handler;
+
+    this->reference();
+
     return 0;
 }
 
@@ -34,13 +39,25 @@ int KReactor::removeEventHandler(EVENT_TYPE type, EventHandler*handler) {
 }
 
 int KReactor::removeEventHandler(int socket, EVENT_TYPE type, EventHandler*handler) {
+    auto opt=0;
+    if (type & EVENT_READ)
+        opt|= EVFILT_READ;
+    if(type&EVENT_WRITE)
+        opt|=EVFILT_WRITE;
+
+    EV_SET(&ev_[0],socket,opt,EV_DELETE,0,0,0);
+    kevent(kq_,&ev_[0],1, nullptr,0, nullptr);
+    this->remove(socket);
+    this->release();
+
     return 0;
 }
 
 int KReactor::handlerEvent() {
     struct kevent ev[10]={0 };
+
     while (true) {
-        auto ret = kevent(kq_, ev_, 2, ev, 2, 0);
+        auto ret = kevent(kq_, nullptr, 0, ev, 10, NULL);
         if (ret == -1) {
             break;
         } else if(ret>0){
@@ -63,8 +80,6 @@ int KReactor::handlerEvent() {
             }//for
         }//else if
     }
-
-
     return 0;
 }
 
@@ -74,4 +89,19 @@ int KReactor::open() {
         return -1;
 
     return 0;
+}
+
+void KReactor::remove(int socket) {
+    auto item = sockLists_.find(socket);
+    if (item != sockLists_.end()) {
+        sockLists_.erase(item);
+    }
+}
+
+void KReactor::reference() {
+    ++count_;
+}
+
+void KReactor::release() {
+    --count_;
 }
