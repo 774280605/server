@@ -3,7 +3,7 @@
 //
 
 #include "KReactor.h"
-
+#include <sys/errno.h>
 
 KReactor::KReactor() {
     open();
@@ -58,7 +58,7 @@ int KReactor::handlerEvent() {
 
     while (true) {
         auto ret = kevent(kq_, nullptr, 0, ev, 10, NULL);
-        if (ret == -1) {
+        if (ret == -1 && errno!= EINTR) {
             break;
         } else if(ret>0){
             for (int i = 0; i < ret; ++i) {
