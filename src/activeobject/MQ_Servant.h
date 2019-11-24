@@ -5,7 +5,15 @@
 #ifndef SERVER_MQ_SERVANT_H
 #define SERVER_MQ_SERVANT_H
 
-class Message{};
+#include <queue>
+#include <string>
+
+class Message{
+public:
+    Message(std::string msg);
+
+    std::string msg_;
+};
 
 
 class MQ_Servant {
@@ -20,7 +28,10 @@ public:
 
     bool empty()const ;
 
+private:
+    std::queue<Message> queue_;
 };
+
 
 
 #endif //SERVER_MQ_SERVANT_H

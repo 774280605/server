@@ -19,15 +19,18 @@ void MQ_Servant::put(const Message &msg) {
 }
 
 Message MQ_Servant::get() {
-    return Message();
+    return queue_.front();
 }
 
 bool MQ_Servant::empty()const{
-    return false;
+    return queue_.empty();
 }
 
 bool MQ_Servant::full() const {
 
-    return false;
+    return queue_.empty();
 }
 
+Message::Message(std::string msg):msg_(msg) {
+
+}
