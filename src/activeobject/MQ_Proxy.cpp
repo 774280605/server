@@ -9,3 +9,11 @@ void MQ_Proxy::put(Message &msg) {
     scheduler_.insert(mr);
 
 }
+
+MQ_Proxy::MQ_Proxy():servant_(10) {
+
+}
+
+MQ_Proxy::~MQ_Proxy() {
+
+}

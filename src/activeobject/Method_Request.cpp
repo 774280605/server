@@ -12,3 +12,11 @@ bool Get::can_run() const {
 void Get::call() {
     printf("Get::call()");
 }
+
+Get::Get(MQ_Servant *servant):servant_(servant) {
+
+}
+
+Get::~Get() {
+
+}

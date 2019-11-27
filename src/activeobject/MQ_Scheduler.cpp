@@ -29,3 +29,7 @@ MQ_Scheduler::MQ_Scheduler() {
     thread_ = std::thread(svc_run, this);
 
 }
+
+MQ_Scheduler::~MQ_Scheduler() {
+
+}
