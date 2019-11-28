@@ -22,7 +22,7 @@ void testZXFQueue(){
 int main() {
 #ifdef WIN32
 #else
-    auto reactor= new KReactor();
+
 #endif
 
     testZXFQueue();

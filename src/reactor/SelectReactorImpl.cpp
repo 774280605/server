@@ -44,20 +44,17 @@ int SelectReactorImpl::handlerEvent() {
         return -1;
     }
 
-    for (auto i = 0; i < readSet.fd_count; ++i) {
-        auto tuple = demuxTable_.getTuple(readSet.fd_array[i]);
-        if (tuple) {
-            tuple->handler_->handleReadEvent(tuple->handler_->get_handle());
+    for (int k = demuxTable_.getMinfd(); k <=demuxTable_.getMaxfd() ; ++k) {
+        auto tuple = demuxTable_.getTuple(k);
+        if(tuple){
+            if(FD_ISSET(k,&readSet)){
+                tuple->handler_->handleReadEvent(k);
+            }
+            if (FD_ISSET(k, &writeSet)) {
+                tuple->handler_->handleWriteEvent(k);
+            }
         }
+
     }
-
-    for (int j = 0; j < writeSet.fd_count; ++j) {
-        auto tuple = demuxTable_.getTuple(writeSet.fd_array[j]);
-        if (tuple) {
-            tuple->handler_->handleWriteEvent(tuple->handler_->get_handle());
-        }
-    }
-
-
     return 0;
 }

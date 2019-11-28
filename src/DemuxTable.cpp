@@ -45,3 +45,13 @@ void DemuxTable::convert_to_fd_set(fd_set &readSet, fd_set &writeSet) {
         }
     }
 }
+
+int DemuxTable::getMinfd() {
+    auto it= table_.begin();
+    return it->first;
+}
+
+int DemuxTable::getMaxfd() {
+    auto it=table_.rbegin();
+    return it->first;
+}

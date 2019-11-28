@@ -15,12 +15,12 @@ extern "C"{
 #endif
 
 #include <stdio.h>
-
+#include "Common.h"
 #include"Session.h"
 int Acceptor::handleReadEvent(int fd) {
     struct sockaddr_in sin;
     auto len = sizeof(sin);
-    auto accept_fd = accept(fd, (struct sockaddr*)&sin, (int *)&len);
+    auto accept_fd = accept(fd, (struct sockaddr*)&sin, (zxf_socklen *)&len);
     if(accept_fd==-1)
         return-1;
     auto session=new Session(accept_fd,this->reactor_);

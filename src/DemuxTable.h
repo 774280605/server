@@ -8,6 +8,10 @@
 #include "EventHandler.h"
 #ifdef WIN32
 #include "winsock2.h"
+#else
+
+#include <sys/select.h>
+#include <sys/types.h>
 #endif
 
 #include <map>
@@ -44,12 +48,17 @@ public:
 
     void convert_to_fd_set(fd_set& readSet,fd_set&writeSet);
 
+    int getMinfd();
+    int getMaxfd();
+
     DemuxTable()= default;
     ~DemuxTable()= default;
 
 
 private:
-    std::map<int,Tuple> table_;
+    using TupleTable= std::map<int,Tuple>;
+
+    TupleTable table_;
 };
 
 

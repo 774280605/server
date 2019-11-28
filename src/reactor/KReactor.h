@@ -9,12 +9,13 @@
 #include <sys/event.h>
 #include <sys/time.h>
 #include <unordered_map>
-#include"Reactor.h"
-
-class KReactor : public Reactor {
+#include "../EventHandler.h"
+#include "ReactorImpl.h"
+class KReactor : public ReactorImpl {
 public:
     KReactor();
     virtual ~KReactor();
+
     int registerEventHandler(EVENT_TYPE type,EventHandler*handler) override ;
 
     int registerEventHandler(int socket, EVENT_TYPE type, EventHandler*handler)override ;
