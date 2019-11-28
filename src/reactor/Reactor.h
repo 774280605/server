@@ -6,29 +6,26 @@
 #define SERVER_REACTOR_H
 
 #include "../EventHandler.h"
+#include "ReactorImpl.h"
 
-enum EVENT_TYPE{
-    EVENT_READ=0x01,
-    EVENT_WRITE=0x02,
-    EVENT_ACCEPT=0x04,
-
-};
 
 class Reactor {
 public:
-    Reactor()=default;
+    Reactor(ReactorImpl*reactor);
     virtual ~Reactor()=default;
 
-    virtual int registerEventHandler(EVENT_TYPE type,EventHandler*handler)=0;
+    virtual int registerEventHandler(EVENT_TYPE type,EventHandler*handler);
 
-    virtual int registerEventHandler(int socket, EVENT_TYPE type, EventHandler*handler)=0;
+    virtual int registerEventHandler(int socket, EVENT_TYPE type, EventHandler*handler);
 
-    virtual int removeEventHandler(EVENT_TYPE type, EventHandler*handler)=0;
+    virtual int removeEventHandler(EVENT_TYPE type, EventHandler*handler);
 
-    virtual int removeEventHandler(int socket, EVENT_TYPE type, EventHandler*handler)=0;
+    virtual int removeEventHandler(int socket, EVENT_TYPE type, EventHandler*handler);
 
-    virtual int handlerEvent()=0;
+    virtual int handlerEvent();
 
+private:
+    ReactorImpl*reactor_;
 };
 
 

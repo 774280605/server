@@ -6,10 +6,10 @@
 #define SERVER_SESSION_H
 
 #include "EventHandler.h"
-#include "reactor/KReactor.h"
+#include "reactor/Reactor.h"
 class Session :public EventHandler{
 public:
-    Session(int socket, KReactor *reactor);
+    Session(int socket, Reactor *reactor);
     virtual ~Session();
 
     int handleReadEvent(int fd) override;
@@ -18,7 +18,7 @@ public:
 
 private:
     int socket_{0};
-    KReactor*reactor_{nullptr};
+    Reactor*reactor_{nullptr};
 };
 
 

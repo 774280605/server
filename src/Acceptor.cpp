@@ -3,14 +3,24 @@
 //
 
 #include "Acceptor.h"
+
+#ifdef WIN32
+extern "C"{
+#include <winsock2.h>
+};
+
+#else
 #include <sys/socket.h>
-#include <stdio.h>
 #include <netinet/in.h>
+#endif
+
+#include <stdio.h>
+
 #include"Session.h"
 int Acceptor::handleReadEvent(int fd) {
     struct sockaddr_in sin;
     auto len = sizeof(sin);
-    auto accept_fd = accept(fd, (struct sockaddr*)&sin, (socklen_t*)&len);
+    auto accept_fd = accept(fd, (struct sockaddr*)&sin, (int *)&len);
     if(accept_fd==-1)
         return-1;
     auto session=new Session(accept_fd,this->reactor_);
@@ -22,7 +32,7 @@ int Acceptor::handleWriteEvent(int fd) {
     return 0;
 }
 
-Acceptor::Acceptor(KReactor *reactor): reactor_(reactor) {
+Acceptor::Acceptor(Reactor *reactor): reactor_(reactor) {
     this->open();
 }
 

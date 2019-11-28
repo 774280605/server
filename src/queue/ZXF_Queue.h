@@ -14,19 +14,21 @@ public:
     void *pop();
 
     void put(void *data);
+    bool isEmpty();
+
+    bool isFull();
 
 private:
     void* *lists_{nullptr};
 
     int maxSize_{10};
-    int index_{};
+    int readIndex_{};
+    int writeIndex_{};
     int size_{};
 
     void init();
 
-    bool isEmpty();
 
-    bool isFull();
 };
 
 

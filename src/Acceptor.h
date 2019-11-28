@@ -6,10 +6,10 @@
 #define SERVER_ACCEPTOR_H
 
 #include "EventHandler.h"
-#include"reactor/KReactor.h"
+#include "reactor/Reactor.h"
 class Acceptor: public EventHandler {
 public:
-    Acceptor(KReactor *reactor);
+    Acceptor(Reactor *reactor);
     virtual ~Acceptor();
 
     int handleReadEvent(int fd) override;
@@ -21,7 +21,7 @@ private:
 
     int socket_{0};
 
-    KReactor*reactor_{nullptr};
+    Reactor*reactor_{nullptr};
 };
 
 

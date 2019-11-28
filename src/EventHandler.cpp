@@ -21,3 +21,7 @@ int EventHandler::handleWriteEvent(int fd) {
 
     return 0;
 }
+
+int EventHandler::get_handle() {
+    return 0;
+}
