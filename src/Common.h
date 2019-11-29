@@ -5,10 +5,10 @@
 #ifndef SERVER_COMMON_H
 #define SERVER_COMMON_H
 
-#include <sys/socket.h>
 #ifdef WIN32
 #define zxf_socklen int
 #else
+#include <sys/socket.h>
 #define zxf_socklen socklen_t
 #endif
 

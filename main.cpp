@@ -1,6 +1,10 @@
 #include <iostream>
 #include "src/Acceptor.h"
 #include "src/queue/ZXF_Queue.h"
+#include "src/reactor/SelectReactorImpl.h"
+#ifdef WIN32
+#include <winsock2.h>
+#endif
 
 void testZXFQueue(){
     ZXF_Queue queue;
@@ -20,17 +24,34 @@ void testZXFQueue(){
 
 
 int main() {
+    Reactor* reactor=nullptr;
 #ifdef WIN32
+    WSADATA data;
+    WSAStartup(0x0202,&data);
+
+    reactor = new Reactor(new SelectReactorImpl);
 #else
+    reactor = new Reactor(new KReactor);
 
 #endif
 
     testZXFQueue();
 
 
-    auto acceptor= new Acceptor(nullptr);
+    auto acceptor= new Acceptor(reactor);
+    while(true){
+        auto result = reactor->handlerEvent();
+        if (result < 0) {
+            break;
+        }
+    }
 
-    //reactor->handlerEvent();
-    //delete (reactor);
+
+    delete (reactor);
+
+#ifdef  WIN32
+    WSACleanup();
+#endif
+
     return 0;
 }

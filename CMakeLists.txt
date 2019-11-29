@@ -17,10 +17,17 @@ set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/bin)
 aux_source_directory(src SRC_LISTS)
 if(APPLE)
     message("this system is APPLE")
-    list(APPEND SRC_LISTS src/reactor/KReactor.h src/reactor/KReactor.cpp)
+    list(APPEND SRC_LISTS
+            src/reactor/KReactor.h
+            src/reactor/KReactor.cpp)
 endif()
-list(APPEND SRC_LISTS src/reactor/Reactor.h src/reactor/Reactor.cpp src/reactor/ReactorImpl.h src/reactor/ReactorImpl.cpp
-        src/reactor/SelectReactorImpl.cpp src/reactor/SelectReactorImpl.h)
+list(APPEND SRC_LISTS
+        src/reactor/Reactor.h
+        src/reactor/Reactor.cpp
+        src/reactor/ReactorImpl.h
+        src/reactor/ReactorImpl.cpp
+        src/reactor/SelectReactorImpl.cpp
+        src/reactor/SelectReactorImpl.h)
 
 
 aux_source_directory(src/activeobject SRC_LISTS)
