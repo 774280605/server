@@ -4,6 +4,9 @@
 #include "src/reactor/SelectReactorImpl.h"
 #ifdef WIN32
 #include <winsock2.h>
+#else
+
+#include "src/reactor/KReactor.h"
 #endif
 
 void testZXFQueue(){
